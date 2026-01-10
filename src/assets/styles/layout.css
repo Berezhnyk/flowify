@@ -1,0 +1,86 @@
+/* Layout Utilities */
+
+.editor-container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.panel {
+  background-color: var(--color-surface);
+  border: var(--border-width) solid var(--color-border);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.panel-header {
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-bottom: var(--border-width) solid var(--color-border);
+  background-color: var(--color-surface-elevated);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  user-select: none;
+}
+
+.panel-content {
+  flex: 1;
+  overflow: auto;
+}
+
+.divider-vertical {
+  width: 3px;
+  background-color: var(--color-divider);
+  cursor: col-resize;
+  user-select: none;
+  transition: background-color var(--transition-fast);
+}
+
+.divider-vertical:hover,
+.divider-vertical.dragging {
+  background-color: var(--color-primary);
+}
+
+.divider-horizontal {
+  height: 3px;
+  background-color: var(--color-divider);
+  cursor: row-resize;
+  user-select: none;
+  transition: background-color var(--transition-fast);
+}
+
+.divider-horizontal:hover,
+.divider-horizontal.dragging {
+  background-color: var(--color-primary);
+}
+
+/* Flexbox Utilities */
+.flex {
+  display: flex;
+}
+
+.flex-col {
+  flex-direction: column;
+}
+
+.flex-1 {
+  flex: 1;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+.gap-sm {
+  gap: var(--spacing-sm);
+}
+
+.gap-md {
+  gap: var(--spacing-md);
+}

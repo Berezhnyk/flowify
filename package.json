@@ -1,0 +1,64 @@
+{
+  "name": "flowify",
+  "version": "1.0.0",
+  "description": "A UML diagram editor with AI-powered assistance",
+  "author": "Ivan Berezhnyk <ivanberezhnyk@gmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Berezhnyk/flowify.git"
+  },
+  "homepage": "https://github.com/Berezhnyk/flowify",
+  "bugs": {
+    "url": "https://github.com/Berezhnyk/flowify/issues"
+  },
+  "keywords": [
+    "uml",
+    "diagram",
+    "mermaid",
+    "vue",
+    "ai",
+    "flowchart",
+    "sequence-diagram",
+    "class-diagram"
+  ],
+  "type": "module",
+  "engines": {
+    "node": "^20.19.0 || >=22.12.0"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "run-p type-check \"build-only {@}\" --",
+    "preview": "vite preview",
+    "build-only": "vite build",
+    "type-check": "vue-tsc --build",
+    "format": "prettier --write --experimental-cli src/"
+  },
+  "dependencies": {
+    "@codemirror/lang-javascript": "^6.2.4",
+    "@codemirror/theme-one-dark": "^6.1.3",
+    "@vueuse/core": "^14.1.0",
+    "codemirror": "^6.0.2",
+    "file-saver": "^2.0.5",
+    "mermaid": "^11.12.2",
+    "pinia": "^3.0.4",
+    "upng-js": "^2.1.0",
+    "splitpanes": "^4.0.4",
+    "vue": "^3.5.26",
+    "vue-router": "^4.6.4"
+  },
+  "devDependencies": {
+    "@tsconfig/node24": "^24.0.3",
+    "@types/file-saver": "^2.0.7",
+    "@types/node": "^24.10.4",
+    "@vitejs/plugin-vue": "^6.0.3",
+    "@vitejs/plugin-vue-jsx": "^5.1.3",
+    "@vue/tsconfig": "^0.8.1",
+    "npm-run-all2": "^8.0.4",
+    "prettier": "3.7.4",
+    "typescript": "~5.9.3",
+    "vite": "^7.3.0",
+    "vite-plugin-vue-devtools": "^8.0.5",
+    "vue-tsc": "^3.2.1"
+  }
+}
