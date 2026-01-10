@@ -2,6 +2,12 @@
 
 A modern UML diagram editor built with Vue 3 that supports creating and editing diagrams using Mermaid.js syntax. Features an AI-powered chat assistant that helps you create and modify diagrams using OpenAI, Anthropic, or local AI models.
 
+## Screenshots
+
+| Light Theme | Dark Theme |
+|-------------|------------|
+| ![Light Theme](docs/demo-light.png) | ![Dark Theme](docs/demo-dark.png) |
+
 ## Features
 
 ### Diagram Editor
@@ -23,7 +29,7 @@ A modern UML diagram editor built with Vue 3 that supports creating and editing 
 - **Light/Dark Theme**: Full theme support including editor and diagram rendering
 - **Zoom & Pan**: Mouse wheel zoom (Ctrl+scroll) and drag to pan
 - **Grid Background**: Toggle-able grid with adjustable size
-- **Export Options**: Copy diagrams as high-quality PNG to clipboard
+- **Export Options**: Copy diagrams as [high-quality PNG](https://raw.githubusercontent.com/Berezhnyk/flowify/main/docs/export-png-high-resolution.png) to clipboard (4x resolution)
 - **Auto-save**: Automatic localStorage persistence
 - **Resizable Panels**: Drag-to-resize 4-panel layout
 
@@ -59,6 +65,8 @@ npm run build
 ## AI Configuration
 
 To use the AI assistant, configure your preferred provider in the Settings panel:
+
+![AI Settings](docs/ai-assistant-configuration.png)
 
 ### OpenAI
 1. Get an API key from [OpenAI Platform](https://platform.openai.com/api-keys)
