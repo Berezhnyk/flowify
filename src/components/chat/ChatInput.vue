@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import { isGitHubUrl } from '@/utils/github'
 
 interface Props {
   isGenerating?: boolean
@@ -9,6 +10,7 @@ interface Emits {
   (e: 'send', message: string): void
   (e: 'stop'): void
   (e: 'data-dropped', dataTransfer: DataTransfer): void
+  (e: 'github-url', url: string): void
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -72,6 +74,14 @@ function handleDrop(event: DragEvent) {
     emit('data-dropped', dataTransfer)
   }
 }
+
+function handlePaste(event: ClipboardEvent) {
+  const text = event.clipboardData?.getData('text')
+  if (text && isGitHubUrl(text)) {
+    event.preventDefault()
+    emit('github-url', text.trim())
+  }
+}
 </script>
 
 <template>
@@ -121,6 +131,7 @@ function handleDrop(event: DragEvent) {
         rows="2"
         :disabled="isGenerating"
         @keydown="handleKeydown"
+        @paste="handlePaste"
       ></textarea>
 
       <button

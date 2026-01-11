@@ -14,6 +14,7 @@ import {
   readDirectory,
   type FileWithPath,
 } from '@/utils/fileReader'
+import { parseGitHubUrl } from '@/utils/github'
 import type { AIRequest } from '@/types'
 import { AIError, ContextSource } from '@/types'
 
@@ -464,6 +465,14 @@ async function handleDataDropped(dataTransfer: DataTransfer) {
     await processFiles(filesWithPath)
   }
 }
+
+function handleGitHubUrl(url: string) {
+  const repo = parseGitHubUrl(url)
+  if (repo) {
+    contextStore.setGitHubRepo(repo)
+    // Fetching will be implemented in Phase 7
+  }
+}
 </script>
 
 <template>
@@ -509,6 +518,7 @@ async function handleDataDropped(dataTransfer: DataTransfer) {
       @send="handleSendMessage"
       @stop="handleStopGeneration"
       @data-dropped="handleDataDropped"
+      @github-url="handleGitHubUrl"
     />
   </div>
 </template>
