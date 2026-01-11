@@ -1,0 +1,115 @@
+import { ref, computed } from 'vue'
+import { defineStore } from 'pinia'
+import type { ContextFile, GitHubRepo } from '@/types'
+import { ContextSource, ContextLoadingState } from '@/types'
+
+export const useContextStore = defineStore('context', () => {
+  // State
+  const files = ref<ContextFile[]>([])
+  const loadingState = ref<ContextLoadingState>(ContextLoadingState.IDLE)
+  const error = ref<string | null>(null)
+  const githubRepo = ref<GitHubRepo | null>(null)
+
+  // Getters
+  const totalSize = computed(() => files.value.reduce((sum, f) => sum + f.size, 0))
+  const fileCount = computed(() => files.value.length)
+  const hasContext = computed(() => files.value.length > 0)
+
+  /**
+   * Returns a formatted summary of context files for AI prompt injection.
+   * Format: "Files in context:\n- path/file.ts (language)\n..."
+   */
+  const contextSummary = computed(() => {
+    if (files.value.length === 0) {
+      return ''
+    }
+
+    const fileList = files.value.map((f) => `- ${f.path} (${f.language})`).join('\n')
+    return `Files in context:\n${fileList}`
+  })
+
+  /**
+   * Returns the full context content formatted for AI requests.
+   * Each file is wrapped with path header and content.
+   */
+  const contextForAI = computed(() => {
+    if (files.value.length === 0) {
+      return ''
+    }
+
+    return files.value
+      .map((f) => `### File: ${f.path}\n\`\`\`${f.language}\n${f.content}\n\`\`\``)
+      .join('\n\n')
+  })
+
+  // Actions
+  function addFile(file: Omit<ContextFile, 'id' | 'addedAt'>): void {
+    const newFile: ContextFile = {
+      ...file,
+      id: crypto.randomUUID(),
+      addedAt: new Date(),
+    }
+    files.value.push(newFile)
+  }
+
+  function addFiles(newFiles: Omit<ContextFile, 'id' | 'addedAt'>[]): void {
+    const filesToAdd: ContextFile[] = newFiles.map((file) => ({
+      ...file,
+      id: crypto.randomUUID(),
+      addedAt: new Date(),
+    }))
+    files.value.push(...filesToAdd)
+  }
+
+  function removeFile(fileId: string): void {
+    const index = files.value.findIndex((f) => f.id === fileId)
+    if (index !== -1) {
+      files.value.splice(index, 1)
+    }
+  }
+
+  function clearFiles(): void {
+    files.value = []
+    githubRepo.value = null
+    error.value = null
+  }
+
+  function setLoading(state: ContextLoadingState): void {
+    loadingState.value = state
+  }
+
+  function setError(message: string | null): void {
+    error.value = message
+    if (message) {
+      loadingState.value = ContextLoadingState.ERROR
+    }
+  }
+
+  function setGitHubRepo(repo: GitHubRepo | null): void {
+    githubRepo.value = repo
+  }
+
+  return {
+    // State
+    files,
+    loadingState,
+    error,
+    githubRepo,
+
+    // Getters
+    totalSize,
+    fileCount,
+    hasContext,
+    contextSummary,
+    contextForAI,
+
+    // Actions
+    addFile,
+    addFiles,
+    removeFile,
+    clearFiles,
+    setLoading,
+    setError,
+    setGitHubRepo,
+  }
+})
