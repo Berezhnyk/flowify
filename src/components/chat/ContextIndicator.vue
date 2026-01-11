@@ -59,6 +59,9 @@ function toggleExpanded() {
           </span>
           {{ contextStore.fileCount }} file{{ contextStore.fileCount !== 1 ? 's' : '' }}
           ({{ totalSizeFormatted }})
+          <span v-if="contextStore.isContextTruncated" class="truncation-warning">
+            (truncated)
+          </span>
         </span>
       </div>
       <div class="context-actions">
@@ -167,6 +170,11 @@ function toggleExpanded() {
   padding: 1px 4px;
   border-radius: 3px;
   margin-right: var(--spacing-xs);
+}
+
+.truncation-warning {
+  color: var(--color-warning, #f59e0b);
+  font-weight: var(--font-weight-medium);
 }
 
 .context-header {

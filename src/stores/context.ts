@@ -1,7 +1,8 @@
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
 import type { ContextFile, GitHubRepo } from '@/types'
-import { ContextSource, ContextLoadingState } from '@/types'
+import { ContextLoadingState } from '@/types'
+import { MAX_CONTEXT_CHARS } from '@/utils/tokens'
 
 export const useContextStore = defineStore('context', () => {
   // State
@@ -31,16 +32,45 @@ export const useContextStore = defineStore('context', () => {
   /**
    * Returns the full context content formatted for AI requests.
    * Each file is wrapped with path header and content.
+   * Content is truncated if it exceeds MAX_CONTEXT_CHARS.
    */
   const contextForAI = computed(() => {
     if (files.value.length === 0) {
       return ''
     }
 
-    return files.value
-      .map((f) => `### File: ${f.path}\n\`\`\`${f.language}\n${f.content}\n\`\`\``)
-      .join('\n\n')
+    let result = ''
+    let remaining = MAX_CONTEXT_CHARS
+
+    // Sort files by size (smaller first to fit more files)
+    const sortedFiles = [...files.value].sort((a, b) => a.size - b.size)
+
+    for (const f of sortedFiles) {
+      if (remaining <= 0) break
+
+      const header = `### File: ${f.path}\n\`\`\`${f.language}\n`
+      const footer = '\n```\n\n'
+      const headerFooterLen = header.length + footer.length
+
+      if (remaining < headerFooterLen + 100) break // Not enough room for meaningful content
+
+      const availableForContent = remaining - headerFooterLen
+      const content =
+        f.content.length <= availableForContent
+          ? f.content
+          : f.content.slice(0, availableForContent - 20) + '\n[... truncated]'
+
+      result += header + content + footer
+      remaining -= header.length + content.length + footer.length
+    }
+
+    return result.trim()
   })
+
+  /**
+   * Returns true if context size exceeds the maximum allowed.
+   */
+  const isContextTruncated = computed(() => totalSize.value > MAX_CONTEXT_CHARS)
 
   // Actions
   function addFile(file: Omit<ContextFile, 'id' | 'addedAt'>): void {
@@ -102,6 +132,7 @@ export const useContextStore = defineStore('context', () => {
     hasContext,
     contextSummary,
     contextForAI,
+    isContextTruncated,
 
     // Actions
     addFile,

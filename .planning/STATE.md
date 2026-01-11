@@ -5,16 +5,16 @@
 See: .planning/PROJECT.md (updated 2026-01-11)
 
 **Core value:** AI generates accurate, relevant diagrams by understanding the actual code structure
-**Current focus:** Phase 10 — Token Management
+**Current focus:** Phase 11 — Conversational Context
 
 ## Current Position
 
-Phase: 10 of 12 (Token Management)
+Phase: 11 of 12 (Conversational Context)
 Plan: Not started
 Status: Ready to plan
-Last activity: 2026-01-11 — Phase 9 completed
+Last activity: 2026-01-11 — Phase 10 completed
 
-Progress: █████████░ 75%
+Progress: ██████████ 83%
 
 ## Performance Metrics
 
