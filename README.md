@@ -35,12 +35,24 @@ A modern UML diagram editor built with Vue 3 that supports creating and editing 
 
 ## Getting Started
 
-### Prerequisites
+### Docker (Recommended)
+
+Run Flowify directly from Docker Hub without building:
+
+```bash
+docker run -d -p 8080:80 berezhnyk/flowify
+```
+
+The application will be available at `http://localhost:8080`
+
+### Manual Installation
+
+#### Prerequisites
 
 - Node.js 20.19.0+ or 22.12.0+
 - npm or yarn
 
-### Installation
+#### Installation
 
 ```bash
 # Clone the repository
