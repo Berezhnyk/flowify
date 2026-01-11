@@ -4,6 +4,7 @@ import { isGitHubUrl } from '@/utils/github'
 
 interface Props {
   isGenerating?: boolean
+  hasContext?: boolean
 }
 
 interface Emits {
@@ -15,6 +16,7 @@ interface Emits {
 
 const props = withDefaults(defineProps<Props>(), {
   isGenerating: false,
+  hasContext: false,
 })
 
 const emit = defineEmits<Emits>()
@@ -104,21 +106,19 @@ function handlePaste(event: ClipboardEvent) {
 
     <div class="input-suggestions">
       <button
-        class="suggestion-chip"
-        @click="inputValue = 'Create a class diagram'"
+        v-if="props.hasContext"
+        class="suggestion-chip context-chip"
+        @click="inputValue = 'Analyze this code and suggest the best diagram type for it'"
       >
+        Analyze code
+      </button>
+      <button class="suggestion-chip" @click="inputValue = 'Create a class diagram'">
         Create class diagram
       </button>
-      <button
-        class="suggestion-chip"
-        @click="inputValue = 'Create a sequence diagram'"
-      >
+      <button class="suggestion-chip" @click="inputValue = 'Create a sequence diagram'">
         Create sequence diagram
       </button>
-      <button
-        class="suggestion-chip"
-        @click="inputValue = 'Explain Mermaid syntax'"
-      >
+      <button class="suggestion-chip" @click="inputValue = 'Explain Mermaid syntax'">
         Explain syntax
       </button>
     </div>
@@ -225,6 +225,12 @@ function handlePaste(event: ClipboardEvent) {
   background-color: var(--color-primary);
   color: white;
   border-color: var(--color-primary);
+}
+
+.context-chip {
+  background-color: color-mix(in srgb, var(--color-primary) 15%, var(--color-surface-elevated));
+  border-color: var(--color-primary);
+  color: var(--color-primary);
 }
 
 .input-container {

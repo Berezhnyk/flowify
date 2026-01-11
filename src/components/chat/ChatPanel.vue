@@ -531,6 +531,7 @@ async function handleGitHubUrl(url: string) {
 
     <ChatInput
       :is-generating="chatStore.isTyping"
+      :has-context="contextStore.hasContext"
       @send="handleSendMessage"
       @stop="handleStopGeneration"
       @data-dropped="handleDataDropped"
