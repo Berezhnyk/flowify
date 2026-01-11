@@ -5,16 +5,16 @@
 See: .planning/PROJECT.md (updated 2026-01-11)
 
 **Core value:** AI generates accurate, relevant diagrams by understanding the actual code structure
-**Current focus:** Phase 8 — AI Context Injection
+**Current focus:** Phase 9 — Diagram Suggestion
 
 ## Current Position
 
-Phase: 8 of 12 (AI Context Injection)
+Phase: 9 of 12 (Diagram Suggestion)
 Plan: Not started
 Status: Ready to plan
-Last activity: 2026-01-11 — Phase 7 completed
+Last activity: 2026-01-11 — Phase 8 completed
 
-Progress: ███████░░░ 58%
+Progress: ████████░░ 67%
 
 ## Performance Metrics
 

@@ -106,6 +106,7 @@ async function handleSendMessage(message: string) {
     const context = {
       type: activeTab.diagram.type,
       content: activeTab.diagram.content,
+      codebaseContext: contextStore.hasContext ? contextStore.contextForAI : undefined,
     }
 
     // Create AI service
@@ -265,6 +266,7 @@ async function handleRetry() {
     const context = {
       type: activeTab.diagram.type,
       content: activeTab.diagram.content,
+      codebaseContext: contextStore.hasContext ? contextStore.contextForAI : undefined,
     }
 
     // Create AI service

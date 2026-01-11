@@ -46,6 +46,10 @@ Supported diagram types:
 
 Be concise and helpful. Focus on creating valid Mermaid syntax. When modifying existing diagrams, preserve the overall structure unless asked to change it.`
 
+    if (context?.codebaseContext) {
+      prompt += `\n\n### Codebase Context\n\nThe user has provided the following code files. Analyze them to help generate appropriate Mermaid diagrams.\n\n${context.codebaseContext}`
+    }
+
     if (context?.content) {
       prompt += `\n\nCurrent diagram (${context.type}):\n\`\`\`mermaid\n${context.content}\n\`\`\``
     }

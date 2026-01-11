@@ -21,7 +21,7 @@ None
 - [x] **Phase 5: Context Display** - Show loaded files with removal controls
 - [x] **Phase 6: GitHub URL Parsing** - Detect and parse GitHub repo URLs
 - [x] **Phase 7: GitHub API** - Fetch public repo contents
-- [ ] **Phase 8: AI Context Injection** - Send file context with AI requests
+- [x] **Phase 8: AI Context Injection** - Send file context with AI requests
 - [ ] **Phase 9: Diagram Suggestion** - AI suggests appropriate diagram type
 - [ ] **Phase 10: Token Management** - Handle large contexts with truncation
 - [ ] **Phase 11: Conversational Context** - Context persists across chat turns
@@ -76,7 +76,7 @@ None
 **Goal**: Modify AI service to include file context in requests
 **Depends on**: Phase 5, Phase 7
 **Research**: Unlikely (extending existing AI service patterns)
-**Plans**: TBD
+**Plans**: 1 (08-01-PLAN.md)
 
 ### Phase 9: Diagram Suggestion
 **Goal**: AI analyzes code context and suggests appropriate Mermaid diagram type
@@ -117,7 +117,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 →
 | 5. Context Display | 1/1 | Complete | 2026-01-11 |
 | 6. GitHub URL Parsing | 1/1 | Complete | 2026-01-11 |
 | 7. GitHub API | 1/1 | Complete | 2026-01-11 |
-| 8. AI Context Injection | 0/TBD | Not started | - |
+| 8. AI Context Injection | 1/1 | Complete | 2026-01-11 |
 | 9. Diagram Suggestion | 0/TBD | Not started | - |
 | 10. Token Management | 0/TBD | Not started | - |
 | 11. Conversational Context | 0/TBD | Not started | - |

@@ -48,6 +48,7 @@ export interface DiagramContext {
   type: string
   content: string
   lastError?: string
+  codebaseContext?: string
 }
 
 export interface AIResponse {
