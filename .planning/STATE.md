@@ -5,16 +5,16 @@
 See: .planning/PROJECT.md (updated 2026-01-11)
 
 **Core value:** AI generates accurate, relevant diagrams by understanding the actual code structure
-**Current focus:** Phase 2 — File Drop Zone
+**Current focus:** Phase 3 — File Reading
 
 ## Current Position
 
-Phase: 2 of 12 (File Drop Zone)
+Phase: 3 of 12 (File Reading)
 Plan: Not started
 Status: Ready to plan
-Last activity: 2026-01-11 — Phase 1 completed
+Last activity: 2026-01-11 — Phase 2 completed
 
-Progress: █░░░░░░░░░ 8%
+Progress: ██░░░░░░░░ 17%
 
 ## Performance Metrics
 

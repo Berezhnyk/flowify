@@ -15,7 +15,7 @@ None
 - Decimal phases (2.1, 2.2): Urgent insertions (marked with INSERTED)
 
 - [x] **Phase 1: Context Foundation** - Types and Pinia store for context state
-- [ ] **Phase 2: File Drop Zone** - Drag & drop UI in chat panel
+- [x] **Phase 2: File Drop Zone** - Drag & drop UI in chat panel
 - [ ] **Phase 3: File Reading** - Read file content with encoding detection
 - [ ] **Phase 4: Folder Processing** - Recursive folder reading and filtering
 - [ ] **Phase 5: Context Display** - Show loaded files with removal controls
@@ -39,7 +39,7 @@ None
 **Goal**: Add drag & drop area to chat panel that accepts files
 **Depends on**: Phase 1
 **Research**: Unlikely (browser File API, existing Vue patterns)
-**Plans**: TBD
+**Plans**: 1 (02-01-PLAN.md)
 
 ### Phase 3: File Reading
 **Goal**: Read dropped file content, detect text vs binary, handle encoding
@@ -111,7 +111,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 →
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Context Foundation | 1/1 | Complete | 2026-01-11 |
-| 2. File Drop Zone | 0/TBD | Not started | - |
+| 2. File Drop Zone | 1/1 | Complete | 2026-01-11 |
 | 3. File Reading | 0/TBD | Not started | - |
 | 4. Folder Processing | 0/TBD | Not started | - |
 | 5. Context Display | 0/TBD | Not started | - |

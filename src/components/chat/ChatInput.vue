@@ -8,6 +8,7 @@ interface Props {
 interface Emits {
   (e: 'send', message: string): void
   (e: 'stop'): void
+  (e: 'files-dropped', files: File[]): void
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -17,6 +18,7 @@ const props = withDefaults(defineProps<Props>(), {
 const emit = defineEmits<Emits>()
 
 const inputValue = ref('')
+const isDragging = ref(false)
 
 function handleSend() {
   const message = inputValue.value.trim()
@@ -36,10 +38,60 @@ function handleKeydown(event: KeyboardEvent) {
     handleSend()
   }
 }
+
+function handleDragEnter(event: DragEvent) {
+  event.preventDefault()
+  event.stopPropagation()
+  isDragging.value = true
+}
+
+function handleDragOver(event: DragEvent) {
+  event.preventDefault()
+  event.stopPropagation()
+}
+
+function handleDragLeave(event: DragEvent) {
+  event.preventDefault()
+  event.stopPropagation()
+  // Only set false if leaving the drop zone entirely
+  const target = event.currentTarget as HTMLElement
+  const rect = target.getBoundingClientRect()
+  const { clientX, clientY } = event
+  if (clientX < rect.left || clientX > rect.right || clientY < rect.top || clientY > rect.bottom) {
+    isDragging.value = false
+  }
+}
+
+function handleDrop(event: DragEvent) {
+  event.preventDefault()
+  event.stopPropagation()
+  isDragging.value = false
+
+  const files = event.dataTransfer?.files
+  if (files && files.length > 0) {
+    emit('files-dropped', Array.from(files))
+  }
+}
 </script>
 
 <template>
-  <div class="chat-input">
+  <div
+    class="chat-input"
+    :class="{ 'chat-input--dragging': isDragging }"
+    @dragenter="handleDragEnter"
+    @dragover="handleDragOver"
+    @dragleave="handleDragLeave"
+    @drop="handleDrop"
+  >
+    <div v-if="isDragging" class="drop-overlay">
+      <div class="drop-content">
+        <svg class="drop-icon" width="48" height="48" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM14 13v4h-4v-4H7l5-5 5 5h-3z"/>
+        </svg>
+        <span class="drop-text">Drop files here</span>
+      </div>
+    </div>
+
     <div class="input-suggestions">
       <button
         class="suggestion-chip"
@@ -104,6 +156,41 @@ function handleKeydown(event: KeyboardEvent) {
   display: flex;
   flex-direction: column;
   gap: var(--spacing-sm);
+  position: relative;
+  transition: all var(--transition-fast);
+}
+
+.chat-input--dragging {
+  border: 2px dashed var(--color-primary);
+  background-color: color-mix(in srgb, var(--color-primary) 10%, var(--color-surface));
+}
+
+.drop-overlay {
+  position: absolute;
+  inset: 0;
+  background-color: color-mix(in srgb, var(--color-primary) 15%, var(--color-surface) 85%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  border-radius: var(--border-radius-sm);
+}
+
+.drop-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.drop-icon {
+  color: var(--color-primary);
+}
+
+.drop-text {
+  color: var(--color-primary);
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-medium);
 }
 
 .input-suggestions {

@@ -3,15 +3,17 @@ import { ref, nextTick, watch, onMounted } from 'vue'
 import { useChatStore } from '@/stores/chat'
 import { useTabsStore } from '@/stores/tabs'
 import { useAIStore } from '@/stores/ai'
+import { useContextStore } from '@/stores/context'
 import ChatMessage from './ChatMessage.vue'
 import ChatInput from './ChatInput.vue'
 import { AIServiceFactory } from '@/services/ai'
 import type { AIRequest } from '@/types'
-import { AIError } from '@/types'
+import { AIError, ContextSource } from '@/types'
 
 const chatStore = useChatStore()
 const tabsStore = useTabsStore()
 const aiStore = useAIStore()
+const contextStore = useContextStore()
 
 const messagesContainer = ref<HTMLDivElement | null>(null)
 const lastUserMessage = ref<string>('')
@@ -378,6 +380,59 @@ function handleClearConversation() {
     lastUserMessage.value = ''
   }
 }
+
+// Simple language detection by file extension
+function detectLanguage(filename: string): string {
+  const ext = filename.split('.').pop()?.toLowerCase() || ''
+  const langMap: Record<string, string> = {
+    ts: 'typescript',
+    tsx: 'typescript',
+    js: 'javascript',
+    jsx: 'javascript',
+    vue: 'vue',
+    py: 'python',
+    java: 'java',
+    go: 'go',
+    rs: 'rust',
+    rb: 'ruby',
+    php: 'php',
+    css: 'css',
+    scss: 'scss',
+    html: 'html',
+    json: 'json',
+    md: 'markdown',
+    yaml: 'yaml',
+    yml: 'yaml',
+    c: 'c',
+    cpp: 'cpp',
+    h: 'c',
+    hpp: 'cpp',
+    cs: 'csharp',
+    swift: 'swift',
+    kt: 'kotlin',
+    scala: 'scala',
+    sql: 'sql',
+    sh: 'shell',
+    bash: 'shell',
+    xml: 'xml',
+    toml: 'toml',
+  }
+  return langMap[ext] || 'plaintext'
+}
+
+function handleFilesDropped(files: File[]) {
+  // Add files to context store (content will be read in Phase 3)
+  for (const file of files) {
+    contextStore.addFile({
+      name: file.name,
+      path: file.name,
+      content: '', // Will be populated in Phase 3
+      language: detectLanguage(file.name),
+      size: file.size,
+      source: ContextSource.LOCAL,
+    })
+  }
+}
 </script>
 
 <template>
@@ -420,6 +475,7 @@ function handleClearConversation() {
       :is-generating="chatStore.isTyping"
       @send="handleSendMessage"
       @stop="handleStopGeneration"
+      @files-dropped="handleFilesDropped"
     />
   </div>
 </template>
